@@ -1,467 +1,452 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2299.5">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Build-A-Burger | Custom Burger Builder</title>
+  <style>
+    :root { --bg:#0b1210; --card:#0f1b16; --muted:#9fb2aa; --text:#e9f4ef; --green:#36d46b; --green2:#1aa34a; --border:#1e3a2c; }
+    *{ box-sizing:border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    body{ margin:0; background:radial-gradient(1000px 600px at 20% -10%, rgba(54,212,107,.25), transparent 60%), var(--bg); color:var(--text); }
+    header{ padding:24px 16px 10px; max-width:1100px; margin:0 auto; }
+    h1{ margin:0 0 6px; letter-spacing:.5px; }
+    .sub{ color:var(--muted); margin:0; }
+    .wrap{ max-width:1100px; margin:0 auto; padding:12px 16px 40px; display:grid; grid-template-columns: 1.25fr .9fr; gap:16px; }
+    @media (max-width: 980px){ .wrap{ grid-template-columns:1fr; } }
+
+    .card{ background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 55%), var(--card);
+      border:1px solid var(--border); border-radius:16px; padding:14px; box-shadow:0 10px 30px rgba(0,0,0,.35); }
+    .card h2{ margin:0 0 10px; font-size:18px; }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .pill{ border:1px solid var(--border); background:rgba(0,0,0,.15); color:var(--text); padding:10px 12px; border-radius:12px; cursor:pointer; user-select:none; }
+    .pill:hover{ border-color: rgba(54,212,107,.7); }
+    .pill.active{ border-color: var(--green); outline:2px solid rgba(54,212,107,.25); }
+    .mini{ font-size:12px; color:var(--muted); }
+    .section{ margin-top:12px; }
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    @media (max-width: 520px){ .grid2{ grid-template-columns:1fr; } }
+
+    button{ background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0)), var(--green2);
+      border:none; color:#06130c; font-weight:700; padding:11px 12px; border-radius:12px; cursor:pointer; }
+    button:hover{ filter:brightness(1.05); }
+    button.secondary{ background:transparent; border:1px solid var(--border); color:var(--text); font-weight:600; }
+    button.danger{ background:#ff4d4d; color:#120606; }
+    input, select{ width:100%; padding:10px 11px; border-radius:12px; border:1px solid var(--border); background:rgba(0,0,0,.2); color:var(--text); }
+    label{ display:block; font-size:12px; color:var(--muted); margin:8px 0 6px; }
+    hr{ border:none; border-top:1px solid rgba(255,255,255,.06); margin:12px 0; }
+
+    .trendItem{ border:1px solid var(--border); border-radius:14px; padding:10px; background:rgba(0,0,0,.12); }
+    .trendTop{ display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+    .trendName{ font-weight:800; }
+    .trendMeta{ color:var(--muted); font-size:12px; margin-top:4px; }
+    .price{ color: #c9ffd9; font-weight:800; }
+    .badge{ display:inline-block; padding:3px 8px; border-radius:999px; border:1px solid rgba(54,212,107,.45); color:#c9ffd9; font-size:12px; margin-left:6px; }
+
+    .adminTabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+    .tab{ padding:8px 10px; border-radius:12px; border:1px solid var(--border); background:rgba(0,0,0,.12); cursor:pointer; }
+    .tab.active{ border-color: var(--green); outline:2px solid rgba(54,212,107,.22); }
+    .table{ width:100%; border-collapse:separate; border-spacing:0 8px; }
+    .table th{ text-align:left; font-size:12px; color:var(--muted); font-weight:700; padding:0 8px; }
+    .table td{ padding:10px 8px; background:rgba(0,0,0,.14); border:1px solid var(--border); }
+    .table tr td:first-child{ border-top-left-radius:12px; border-bottom-left-radius:12px; }
+    .table tr td:last-child{ border-top-right-radius:12px; border-bottom-right-radius:12px; }
+    .actions{ display:flex; gap:8px; }
+    .hint{ color:var(--muted); font-size:12px; line-height:1.35; }
+    .totalBox{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:rgba(0,0,0,.12); margin-top:10px; }
   </style>
 </head>
 <body>
-<p class="p1">&lt;!doctype html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="utf-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Build-A-Burger | Custom Burger Builder&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>:root { --bg:#0b1210; --card:#0f1b16; --muted:#9fb2aa; --text:#e9f4ef; --green:#36d46b; --green2:#1aa34a; --border:#1e3a2c; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>*{ box-sizing:border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body{ margin:0; background:radial-gradient(1000px 600px at 20% -10%, rgba(54,212,107,.25), transparent 60%), var(--bg); color:var(--text); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>header{ padding:24px 16px 10px; max-width:1100px; margin:0 auto; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>h1{ margin:0 0 6px; letter-spacing:.5px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.sub{ color:var(--muted); margin:0; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.wrap{ max-width:1100px; margin:0 auto; padding:12px 16px 40px; display:grid; grid-template-columns: 1.25fr .9fr; gap:16px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@media (max-width: 980px){ .wrap{ grid-template-columns:1fr; } }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.card{ background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 55%), var(--card);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border:1px solid var(--border); border-radius:16px; padding:14px; box-shadow:0 10px 30px rgba(0,0,0,.35); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.card h2{ margin:0 0 10px; font-size:18px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.pill{ border:1px solid var(--border); background:rgba(0,0,0,.15); color:var(--text); padding:10px 12px; border-radius:12px; cursor:pointer; user-select:none; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.pill:hover{ border-color: rgba(54,212,107,.7); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.pill.active{ border-color: var(--green); outline:2px solid rgba(54,212,107,.25); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.mini{ font-size:12px; color:var(--muted); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.section{ margin-top:12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@media (max-width: 520px){ .grid2{ grid-template-columns:1fr; } }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>button{ background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0)), var(--green2);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border:none; color:#06130c; font-weight:700; padding:11px 12px; border-radius:12px; cursor:pointer; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>button:hover{ filter:brightness(1.05); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>button.secondary{ background:transparent; border:1px solid var(--border); color:var(--text); font-weight:600; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>button.danger{ background:#ff4d4d; color:#120606; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>input, select{ width:100%; padding:10px 11px; border-radius:12px; border:1px solid var(--border); background:rgba(0,0,0,.2); color:var(--text); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>label{ display:block; font-size:12px; color:var(--muted); margin:8px 0 6px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>hr{ border:none; border-top:1px solid rgba(255,255,255,.06); margin:12px 0; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.trendItem{ border:1px solid var(--border); border-radius:14px; padding:10px; background:rgba(0,0,0,.12); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.trendTop{ display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.trendName{ font-weight:800; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.trendMeta{ color:var(--muted); font-size:12px; margin-top:4px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.price{ color: #c9ffd9; font-weight:800; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.badge{ display:inline-block; padding:3px 8px; border-radius:999px; border:1px solid rgba(54,212,107,.45); color:#c9ffd9; font-size:12px; margin-left:6px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.adminTabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.tab{ padding:8px 10px; border-radius:12px; border:1px solid var(--border); background:rgba(0,0,0,.12); cursor:pointer; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.tab.active{ border-color: var(--green); outline:2px solid rgba(54,212,107,.22); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.table{ width:100%; border-collapse:separate; border-spacing:0 8px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.table th{ text-align:left; font-size:12px; color:var(--muted); font-weight:700; padding:0 8px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.table td{ padding:10px 8px; background:rgba(0,0,0,.14); border:1px solid var(--border); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.table tr td:first-child{ border-top-left-radius:12px; border-bottom-left-radius:12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.table tr td:last-child{ border-top-right-radius:12px; border-bottom-right-radius:12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.actions{ display:flex; gap:8px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.hint{ color:var(--muted); font-size:12px; line-height:1.35; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.totalBox{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:rgba(0,0,0,.12); margin-top:10px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;header&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;Build-A-Burger&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="sub"&gt;Customise your burger • Admin can add toppings + set prices • Trending burgers update automatically&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="wrap"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- LEFT: Trending + Builder --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;🔥 Top Trending Burgers&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="trendingList" class="grid2"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="mini" id="trendingNote"&gt;&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;hr /&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;🍔 Build Your Burger&lt;/h2&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="row" style="justify-content:space-between;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mini"&gt;Burger name (optional)&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;input id="burgerName" placeholder="e.g., Triple Cheese Beast" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="min-width:220px;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mini"&gt;Currency&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;select id="currency"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="€"&gt;€ EUR&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="$"&gt;$ USD&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="£"&gt;£ GBP&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="AED"&gt;AED&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/select&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3 style="margin:8px 0 6px;"&gt;Bun&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="row" id="bunChoices"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3 style="margin:8px 0 6px;"&gt;Patty&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="row" id="pattyChoices"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3 style="margin:8px 0 6px;"&gt;Toppings&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="row" id="toppingChoices"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="hint" style="margin-top:6px;"&gt;Tip: Click to toggle. Add new toppings + prices in the Admin panel.&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3 style="margin:8px 0 6px;"&gt;Sauces&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="row" id="sauceChoices"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="totalBox"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="mini"&gt;Current total&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="font-size:18px; font-weight:900;" id="totalPrice"&gt;€0.00&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="secondary" id="resetBtn" type="button"&gt;Reset&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;button id="submitBtn" type="button"&gt;Submit Burger&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="mini" id="submitMsg" style="margin-top:10px;"&gt;&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- RIGHT: Admin Panel --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;🛠️ Admin Panel&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="hint"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>Add/edit choices and change prices. This is stored in your browser (LocalStorage).&lt;br /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>If you want a shared online version later, you’ll need a backend or a shared database.</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="adminTabs"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tab active" data-tab="toppings"&gt;Toppings&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tab" data-tab="buns"&gt;Buns&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tab" data-tab="patties"&gt;Patties&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tab" data-tab="sauces"&gt;Sauces&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="adminArea"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;hr /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="secondary" id="exportBtn" type="button"&gt;Export Data (JSON)&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="secondary" id="importBtn" type="button"&gt;Import Data (JSON)&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="danger" id="factoryResetBtn" type="button"&gt;Factory Reset&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="mini"&gt;Export/import is handy if you want to move your menu + prices to another device.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p1">/* =========================</p>
-<p class="p1"><span class="Apple-converted-space">   </span>Build-A-Burger</p>
-<p class="p1"><span class="Apple-converted-space">   </span>Single-file demo (LocalStorage)</p>
-<p class="p1"><span class="Apple-converted-space">   </span>========================= */</p>
-<p class="p2"><br></p>
-<p class="p1">const LS_KEY = "buildaburger_data_v1";</p>
-<p class="p2"><br></p>
-<p class="p1">const DEFAULT_DATA = {</p>
-<p class="p1"><span class="Apple-converted-space">  </span>menu: {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>buns: [</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Sesame Bun", price: 0.80 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Brioche Bun", price: 1.20 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Gluten-Free Bun", price: 1.50 },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>],</p>
-<p class="p1"><span class="Apple-converted-space">    </span>patties: [</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Beef Patty", price: 3.50 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Chicken Patty", price: 3.20 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Plant-Based Patty", price: 3.80 },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>],</p>
-<p class="p1"><span class="Apple-converted-space">    </span>toppings: [</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Cheddar", price: 0.60 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Swiss", price: 0.70 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "American Cheese", price: 0.55 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Bacon", price: 1.20 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Jalapeños", price: 0.40 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Onion", price: 0.25 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Pickles", price: 0.25 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Lettuce", price: 0.20 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Tomato", price: 0.30 },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>],</p>
-<p class="p1"><span class="Apple-converted-space">    </span>sauces: [</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Ketchup", price: 0.15 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Mayo", price: 0.15 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "BBQ", price: 0.25 },</p>
-<p class="p1"><span class="Apple-converted-space">      </span>{ id: uid(), name: "Spicy Sauce", price: 0.30 },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>]</p>
-<p class="p1"><span class="Apple-converted-space">  </span>},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>submissions: [</p>
-<p class="p1"><span class="Apple-converted-space">    </span>// { key, count, lastPrice, displayName, createdAt }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>]</p>
-<p class="p1">};</p>
-<p class="p2"><br></p>
-<p class="p1">let data = loadData();</p>
-<p class="p1">let state = {</p>
-<p class="p1"><span class="Apple-converted-space">  </span>currency: "€",</p>
-<p class="p1"><span class="Apple-converted-space">  </span>selected: {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>bunId: data.menu.buns[0]?.id ?? null,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>pattyId: data.menu.patties[0]?.id ?? null,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>toppingIds: new Set(),</p>
-<p class="p1"><span class="Apple-converted-space">    </span>sauceIds: new Set(),</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1">};</p>
-<p class="p2"><br></p>
-<p class="p1">const el = (id) =&gt; document.getElementById(id);</p>
-<p class="p1">const fmt = (n) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const c = state.currency;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>// If AED selected, show "AED 12.34" format</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if (c === "AED") return `AED ${Number(n).toFixed(2)}`;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return `${c}${Number(n).toFixed(2)}`;</p>
-<p class="p1">};</p>
-<p class="p2"><br></p>
-<p class="p1">function uid(){ return Math.random().toString(16).slice(2) + Date.now().toString(16); }</p>
-<p class="p2"><br></p>
-<p class="p1">function loadData(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>try{</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const raw = localStorage.getItem(LS_KEY);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if(!raw) return structuredClone(DEFAULT_DATA);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const parsed = JSON.parse(raw);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>// light validation / fallback</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if(!parsed?.menu?.toppings) return structuredClone(DEFAULT_DATA);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>return parsed;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}catch(e){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>return structuredClone(DEFAULT_DATA);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function saveData(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>localStorage.setItem(LS_KEY, JSON.stringify(data));</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function getItemById(list, id){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return list.find(x =&gt; x.id === id) || null;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function computeTotal(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const bun = getItemById(data.menu.buns, state.selected.bunId);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const patty = getItemById(data.menu.patties, state.selected.pattyId);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>let total = 0;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if (bun) total += bun.price;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if (patty) total += patty.price;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>for (const tid of state.selected.toppingIds){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const t = getItemById(data.menu.toppings, tid);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (t) total += t.price;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>for (const sid of state.selected.sauceIds){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const s = getItemById(data.menu.sauces, sid);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (s) total += s.price;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return total;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function burgerSignature(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>// Used for trending: stable key representing the burger config</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const bun = state.selected.bunId || "";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const patty = state.selected.pattyId || "";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const toppings = [...state.selected.toppingIds].sort().join(",");</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const sauces = [...state.selected.sauceIds].sort().join(",");</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return `bun=${bun}|patty=${patty}|t=${toppings}|s=${sauces}`;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function burgerHumanName(customName){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if (customName &amp;&amp; customName.trim().length) return customName.trim();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const bun = getItemById(data.menu.buns, state.selected.bunId)?.name ?? "Bun";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const patty = getItemById(data.menu.patties, state.selected.pattyId)?.name ?? "Patty";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const toppings = [...state.selected.toppingIds]</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.map(id =&gt; getItemById(data.menu.toppings, id)?.name)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.filter(Boolean);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const sauces = [...state.selected.sauceIds]</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.map(id =&gt; getItemById(data.menu.sauces, id)?.name)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.filter(Boolean);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const tPart = toppings.length ? ` + ${toppings.slice(0,4).join(", ")}${toppings.length&gt;4 ? "…" : ""}` : "";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const sPart = sauces.length ? ` (Sauces: ${sauces.slice(0,3).join(", ")}${sauces.length&gt;3 ? "…" : ""})` : "";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return `${patty} on ${bun}${tPart}${sPart}`;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">/* =========================</p>
-<p class="p1"><span class="Apple-converted-space">   </span>UI Rendering</p>
-<p class="p1"><span class="Apple-converted-space">   </span>========================= */</p>
-<p class="p1">function renderAll(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>// currency</p>
-<p class="p1"><span class="Apple-converted-space">  </span>el("currency").value = state.currency;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>renderChoices("bunChoices", data.menu.buns, state.selected.bunId, (id) =&gt; { state.selected.bunId = id; refreshTotal(); renderTrending(); });</p>
-<p class="p1"><span class="Apple-converted-space">  </span>renderChoices("pattyChoices", data.menu.patties, state.selected.pattyId, (id) =&gt; { state.selected.pattyId = id; refreshTotal(); renderTrending(); });</p>
-<p class="p1"><span class="Apple-converted-space">  </span>renderMultiChoices("toppingChoices", data.menu.toppings, state.selected.toppingIds, () =&gt; { refreshTotal(); renderTrending(); });</p>
-<p class="p1"><span class="Apple-converted-space">  </span>renderMultiChoices("sauceChoices", data.menu.sauces, state.selected.sauceIds, () =&gt; { refreshTotal(); renderTrending(); });</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>refreshTotal();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>renderTrending();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>renderAdmin("toppings");</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function renderChoices(containerId, list, activeId, onSelect){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const root = el(containerId);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>root.innerHTML = "";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>list.forEach(item =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const div = document.createElement("div");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>div.className = "pill" + (item.id === activeId ? " active" : "");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>div.title = `Price: ${fmt(item.price)}`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>div.innerHTML = `${escapeHtml(item.name)} &lt;span class="mini"&gt;(${fmt(item.price)})&lt;/span&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>div.onclick = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>onSelect(item.id);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>renderChoices(containerId, list, item.id, onSelect);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p1"><span class="Apple-converted-space">    </span>root.appendChild(div);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>});</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function renderMultiChoices(containerId, list, set, onToggle){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const root = el(containerId);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>root.innerHTML = "";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>list.forEach(item =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const div = document.createElement("div");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const isOn = set.has(item.id);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>div.className = "pill" + (isOn ? " active" : "");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>div.title = `Price: ${fmt(item.price)} (click to ${isOn ? "remove" : "add"})`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>div.innerHTML = `${escapeHtml(item.name)} &lt;span class="mini"&gt;(${fmt(item.price)})&lt;/span&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>div.onclick = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (set.has(item.id)) set.delete(item.id); else set.add(item.id);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>onToggle();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>renderMultiChoices(containerId, list, set, onToggle);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p1"><span class="Apple-converted-space">    </span>root.appendChild(div);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>});</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function refreshTotal(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>el("totalPrice").textContent = fmt(computeTotal());</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function renderTrending(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const list = [...data.submissions]</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.sort((a,b) =&gt; b.count - a.count || b.createdAt - a.createdAt)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.slice(0,6);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const root = el("trendingList");</p>
-<p class="p1"><span class="Apple-converted-space">  </span>root.innerHTML = "";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(!data.submissions.length){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>el("trendingNote").textContent = "No burgers submitted yet — submit one to start trending!";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>el("trendingNote").textContent = "Trending is based on the most-submitted burger combinations on this device.";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>list.forEach((item, idx) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const div = document.createElement("div");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>div.className = "trendItem";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>div.innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="trendTop"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="trendName"&gt;${escapeHtml(item.displayName)} &lt;span class="badge"&gt;#${idx+1}&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="trendMeta"&gt;Submitted: &lt;b&gt;${item.count}&lt;/b&gt; times&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="price"&gt;${fmt(item.lastPrice)}&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="trendMeta" style="margin-top:8px; opacity:.95;"&gt;${escapeHtml(item.shortKey)}&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>root.appendChild(div);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>});</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">/* =========================</p>
-<p class="p1"><span class="Apple-converted-space">   </span>Submissions (Trending)</p>
-<p class="p1"><span class="Apple-converted-space">   </span>========================= */</p>
-<p class="p1">function submitBurger(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const name = el("burgerName").value;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const key = burgerSignature();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const total = computeTotal();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const displayName = burgerHumanName(name);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>let found = data.submissions.find(s =&gt; s.key === key);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(!found){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>found = {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>key,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>count: 0,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>lastPrice: total,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>displayName,</p>
-<p class="p1"><span class="Apple-converted-space">      </span>createdAt: Date.now(),</p>
-<p class="p1"><span class="Apple-converted-space">      </span>shortKey: shortKeyFromConfig(),</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p1"><span class="Apple-converted-space">    </span>data.submissions.push(found);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>found.count += 1;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>found.lastPrice = total;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>// If user typed a custom name, keep the latest name (optional branding)</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if (name &amp;&amp; name.trim().length) found.displayName = name.trim();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>saveData();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>el("submitMsg").textContent = `✅ Submitted: "${displayName}" — Total: ${fmt(total)}`;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>el("burgerName").value = "";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>renderTrending();</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function shortKeyFromConfig(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const bun = getItemById(data.menu.buns, state.selected.bunId)?.name ?? "Bun";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const patty = getItemById(data.menu.patties, state.selected.pattyId)?.name ?? "Patty";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const t = [...state.selected.toppingIds].map(id =&gt; getItemById(data.menu.toppings, id)?.name).filter(Boolean);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const s = [...state.selected.sauceIds].map(id =&gt; getItemById(data.menu.sauces, id)?.name).filter(Boolean);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return `${patty} | ${bun} | Toppings: ${t.length ? t.join(", ") : "None"} | Sauces: ${s.length ? s.join(", ") : "None"}`;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">/* =========================</p>
-<p class="p1"><span class="Apple-converted-space">   </span>Admin Panel</p>
-<p class="p1"><span class="Apple-converted-space">   </span>========================= */</p>
-<p class="p1">let currentAdminTab = "toppings";</p>
-<p class="p2"><br></p>
-<p class="p1">function renderAdmin(tab){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>currentAdminTab = tab;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>// tabs UI</p>
-<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll(".tab").forEach(t =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>t.classList.toggle("active", t.dataset.tab === tab);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const area = el("adminArea");</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const list = data.menu[tab];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>area.innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3 style="margin:0 0 6px;"&gt;Manage ${capitalize(tab)}&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="hint"&gt;Add new options, edit names, and change prices. Changes instantly update the builder.&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="grid2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;New ${singular(tab)} name&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;input id="newName" placeholder="e.g., Smoked Gouda" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;New ${singular(tab)} price&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;input id="newPrice" type="number" step="0.01" min="0" placeholder="e.g., 0.75" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="row" style="margin-top:10px;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="addBtn" type="button"&gt;Add ${singular(tab)}&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="secondary" id="clearSubmissionsBtn" type="button" title="Clears trending burgers"&gt;Clear Trending Data&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="s</p>
-</body>
+  <header>
+    <h1>Build-A-Burger</h1>
+    <p class="sub">Customise your burger • Admin can add toppings + set prices • Trending burgers update automatically</p>
+  </header>
+
+  <div class="wrap">
+    <!-- LEFT: Trending + Builder -->
+    <div class="card">
+      <h2>🔥 Top Trending Burgers</h2>
+      <div id="trendingList" class="grid2"></div>
+      <p class="mini" id="trendingNote"></p>
+
+      <hr />
+
+      <h2>🍔 Build Your Burger</h2>
+
+      <div class="section">
+        <div class="row" style="justify-content:space-between;">
+          <div>
+            <div class="mini">Burger name (optional)</div>
+            <input id="burgerName" placeholder="e.g., Triple Cheese Beast" />
+          </div>
+          <div style="min-width:220px;">
+            <div class="mini">Currency</div>
+            <select id="currency">
+              <option value="€">€ EUR</option>
+              <option value="$">$ USD</option>
+              <option value="£">£ GBP</option>
+              <option value="AED">AED</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 style="margin:8px 0 6px;">Bun</h3>
+        <div class="row" id="bunChoices"></div>
+      </div>
+
+      <div class="section">
+        <h3 style="margin:8px 0 6px;">Patty</h3>
+        <div class="row" id="pattyChoices"></div>
+      </div>
+
+      <div class="section">
+        <h3 style="margin:8px 0 6px;">Toppings</h3>
+        <div class="row" id="toppingChoices"></div>
+        <div class="hint" style="margin-top:6px;">Tip: Click to toggle. Add new toppings + prices in the Admin panel.</div>
+      </div>
+
+      <div class="section">
+        <h3 style="margin:8px 0 6px;">Sauces</h3>
+        <div class="row" id="sauceChoices"></div>
+      </div>
+
+      <div class="totalBox">
+        <div>
+          <div class="mini">Current total</div>
+          <div style="font-size:18px; font-weight:900;" id="totalPrice">€0.00</div>
+        </div>
+        <div class="row">
+          <button class="secondary" id="resetBtn" type="button">Reset</button>
+          <button id="submitBtn" type="button">Submit Burger</button>
+        </div>
+      </div>
+
+      <p class="mini" id="submitMsg" style="margin-top:10px;"></p>
+    </div>
+
+    <!-- RIGHT: Admin Panel -->
+    <div class="card">
+      <h2>🛠️ Admin Panel</h2>
+      <p class="hint">
+        Add/edit choices and change prices. This is stored in your browser (LocalStorage).<br />
+        If you want a shared online version later, you’ll need a backend or a shared database.
+      </p>
+
+      <div class="adminTabs">
+        <div class="tab active" data-tab="toppings">Toppings</div>
+        <div class="tab" data-tab="buns">Buns</div>
+        <div class="tab" data-tab="patties">Patties</div>
+        <div class="tab" data-tab="sauces">Sauces</div>
+      </div>
+
+      <div id="adminArea"></div>
+
+      <hr />
+      <div class="row">
+        <button class="secondary" id="exportBtn" type="button">Export Data (JSON)</button>
+        <button class="secondary" id="importBtn" type="button">Import Data (JSON)</button>
+        <button class="danger" id="factoryResetBtn" type="button">Factory Reset</button>
+      </div>
+      <p class="mini">Export/import is handy if you want to move your menu + prices to another device.</p>
+    </div>
+  </div>
+
+<script>
+/* =========================
+   Build-A-Burger
+   Single-file demo (LocalStorage)
+   ========================= */
+
+const LS_KEY = "buildaburger_data_v1";
+
+const DEFAULT_DATA = {
+  menu: {
+    buns: [
+      { id: uid(), name: "Sesame Bun", price: 0.80 },
+      { id: uid(), name: "Brioche Bun", price: 1.20 },
+      { id: uid(), name: "Gluten-Free Bun", price: 1.50 },
+    ],
+    patties: [
+      { id: uid(), name: "Beef Patty", price: 3.50 },
+      { id: uid(), name: "Chicken Patty", price: 3.20 },
+      { id: uid(), name: "Plant-Based Patty", price: 3.80 },
+    ],
+    toppings: [
+      { id: uid(), name: "Cheddar", price: 0.60 },
+      { id: uid(), name: "Swiss", price: 0.70 },
+      { id: uid(), name: "American Cheese", price: 0.55 },
+      { id: uid(), name: "Bacon", price: 1.20 },
+      { id: uid(), name: "Jalapeños", price: 0.40 },
+      { id: uid(), name: "Onion", price: 0.25 },
+      { id: uid(), name: "Pickles", price: 0.25 },
+      { id: uid(), name: "Lettuce", price: 0.20 },
+      { id: uid(), name: "Tomato", price: 0.30 },
+    ],
+    sauces: [
+      { id: uid(), name: "Ketchup", price: 0.15 },
+      { id: uid(), name: "Mayo", price: 0.15 },
+      { id: uid(), name: "BBQ", price: 0.25 },
+      { id: uid(), name: "Spicy Sauce", price: 0.30 },
+    ]
+  },
+  submissions: [
+    // { key, count, lastPrice, displayName, createdAt }
+  ]
+};
+
+let data = loadData();
+let state = {
+  currency: "€",
+  selected: {
+    bunId: data.menu.buns[0]?.id ?? null,
+    pattyId: data.menu.patties[0]?.id ?? null,
+    toppingIds: new Set(),
+    sauceIds: new Set(),
+  }
+};
+
+const el = (id) => document.getElementById(id);
+const fmt = (n) => {
+  const c = state.currency;
+  // If AED selected, show "AED 12.34" format
+  if (c === "AED") return `AED ${Number(n).toFixed(2)}`;
+  return `${c}${Number(n).toFixed(2)}`;
+};
+
+function uid(){ return Math.random().toString(16).slice(2) + Date.now().toString(16); }
+
+function loadData(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(!raw) return structuredClone(DEFAULT_DATA);
+    const parsed = JSON.parse(raw);
+    // light validation / fallback
+    if(!parsed?.menu?.toppings) return structuredClone(DEFAULT_DATA);
+    return parsed;
+  }catch(e){
+    return structuredClone(DEFAULT_DATA);
+  }
+}
+
+function saveData(){
+  localStorage.setItem(LS_KEY, JSON.stringify(data));
+}
+
+function getItemById(list, id){
+  return list.find(x => x.id === id) || null;
+}
+
+function computeTotal(){
+  const bun = getItemById(data.menu.buns, state.selected.bunId);
+  const patty = getItemById(data.menu.patties, state.selected.pattyId);
+  let total = 0;
+  if (bun) total += bun.price;
+  if (patty) total += patty.price;
+
+  for (const tid of state.selected.toppingIds){
+    const t = getItemById(data.menu.toppings, tid);
+    if (t) total += t.price;
+  }
+  for (const sid of state.selected.sauceIds){
+    const s = getItemById(data.menu.sauces, sid);
+    if (s) total += s.price;
+  }
+  return total;
+}
+
+function burgerSignature(){
+  // Used for trending: stable key representing the burger config
+  const bun = state.selected.bunId || "";
+  const patty = state.selected.pattyId || "";
+  const toppings = [...state.selected.toppingIds].sort().join(",");
+  const sauces = [...state.selected.sauceIds].sort().join(",");
+  return `bun=${bun}|patty=${patty}|t=${toppings}|s=${sauces}`;
+}
+
+function burgerHumanName(customName){
+  if (customName && customName.trim().length) return customName.trim();
+
+  const bun = getItemById(data.menu.buns, state.selected.bunId)?.name ?? "Bun";
+  const patty = getItemById(data.menu.patties, state.selected.pattyId)?.name ?? "Patty";
+
+  const toppings = [...state.selected.toppingIds]
+    .map(id => getItemById(data.menu.toppings, id)?.name)
+    .filter(Boolean);
+
+  const sauces = [...state.selected.sauceIds]
+    .map(id => getItemById(data.menu.sauces, id)?.name)
+    .filter(Boolean);
+
+  const tPart = toppings.length ? ` + ${toppings.slice(0,4).join(", ")}${toppings.length>4 ? "…" : ""}` : "";
+  const sPart = sauces.length ? ` (Sauces: ${sauces.slice(0,3).join(", ")}${sauces.length>3 ? "…" : ""})` : "";
+  return `${patty} on ${bun}${tPart}${sPart}`;
+}
+
+/* =========================
+   UI Rendering
+   ========================= */
+function renderAll(){
+  // currency
+  el("currency").value = state.currency;
+
+  renderChoices("bunChoices", data.menu.buns, state.selected.bunId, (id) => { state.selected.bunId = id; refreshTotal(); renderTrending(); });
+  renderChoices("pattyChoices", data.menu.patties, state.selected.pattyId, (id) => { state.selected.pattyId = id; refreshTotal(); renderTrending(); });
+  renderMultiChoices("toppingChoices", data.menu.toppings, state.selected.toppingIds, () => { refreshTotal(); renderTrending(); });
+  renderMultiChoices("sauceChoices", data.menu.sauces, state.selected.sauceIds, () => { refreshTotal(); renderTrending(); });
+
+  refreshTotal();
+  renderTrending();
+  renderAdmin("toppings");
+}
+
+function renderChoices(containerId, list, activeId, onSelect){
+  const root = el(containerId);
+  root.innerHTML = "";
+  list.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "pill" + (item.id === activeId ? " active" : "");
+    div.title = `Price: ${fmt(item.price)}`;
+    div.innerHTML = `${escapeHtml(item.name)} <span class="mini">(${fmt(item.price)})</span>`;
+    div.onclick = () => {
+      onSelect(item.id);
+      renderChoices(containerId, list, item.id, onSelect);
+    };
+    root.appendChild(div);
+  });
+}
+
+function renderMultiChoices(containerId, list, set, onToggle){
+  const root = el(containerId);
+  root.innerHTML = "";
+  list.forEach(item => {
+    const div = document.createElement("div");
+    const isOn = set.has(item.id);
+    div.className = "pill" + (isOn ? " active" : "");
+    div.title = `Price: ${fmt(item.price)} (click to ${isOn ? "remove" : "add"})`;
+    div.innerHTML = `${escapeHtml(item.name)} <span class="mini">(${fmt(item.price)})</span>`;
+    div.onclick = () => {
+      if (set.has(item.id)) set.delete(item.id); else set.add(item.id);
+      onToggle();
+      renderMultiChoices(containerId, list, set, onToggle);
+    };
+    root.appendChild(div);
+  });
+}
+
+function refreshTotal(){
+  el("totalPrice").textContent = fmt(computeTotal());
+}
+
+function renderTrending(){
+  const list = [...data.submissions]
+    .sort((a,b) => b.count - a.count || b.createdAt - a.createdAt)
+    .slice(0,6);
+
+  const root = el("trendingList");
+  root.innerHTML = "";
+
+  if(!data.submissions.length){
+    el("trendingNote").textContent = "No burgers submitted yet — submit one to start trending!";
+  } else {
+    el("trendingNote").textContent = "Trending is based on the most-submitted burger combinations on this device.";
+  }
+
+  list.forEach((item, idx) => {
+    const div = document.createElement("div");
+    div.className = "trendItem";
+    div.innerHTML = `
+      <div class="trendTop">
+        <div>
+          <div class="trendName">${escapeHtml(item.displayName)} <span class="badge">#${idx+1}</span></div>
+          <div class="trendMeta">Submitted: <b>${item.count}</b> times</div>
+        </div>
+        <div class="price">${fmt(item.lastPrice)}</div>
+      </div>
+      <div class="trendMeta" style="margin-top:8px; opacity:.95;">${escapeHtml(item.shortKey)}</div>
+    `;
+    root.appendChild(div);
+  });
+}
+
+/* =========================
+   Submissions (Trending)
+   ========================= */
+function submitBurger(){
+  const name = el("burgerName").value;
+  const key = burgerSignature();
+  const total = computeTotal();
+  const displayName = burgerHumanName(name);
+
+  let found = data.submissions.find(s => s.key === key);
+  if(!found){
+    found = {
+      key,
+      count: 0,
+      lastPrice: total,
+      displayName,
+      createdAt: Date.now(),
+      shortKey: shortKeyFromConfig(),
+    };
+    data.submissions.push(found);
+  }
+  found.count += 1;
+  found.lastPrice = total;
+  // If user typed a custom name, keep the latest name (optional branding)
+  if (name && name.trim().length) found.displayName = name.trim();
+
+  saveData();
+  el("submitMsg").textContent = `✅ Submitted: "${displayName}" — Total: ${fmt(total)}`;
+  el("burgerName").value = "";
+  renderTrending();
+}
+
+function shortKeyFromConfig(){
+  const bun = getItemById(data.menu.buns, state.selected.bunId)?.name ?? "Bun";
+  const patty = getItemById(data.menu.patties, state.selected.pattyId)?.name ?? "Patty";
+  const t = [...state.selected.toppingIds].map(id => getItemById(data.menu.toppings, id)?.name).filter(Boolean);
+  const s = [...state.selected.sauceIds].map(id => getItemById(data.menu.sauces, id)?.name).filter(Boolean);
+  return `${patty} | ${bun} | Toppings: ${t.length ? t.join(", ") : "None"} | Sauces: ${s.length ? s.join(", ") : "None"}`;
+}
+
+/* =========================
+   Admin Panel
+   ========================= */
+let currentAdminTab = "toppings";
+
+function renderAdmin(tab){
+  currentAdminTab = tab;
+
+  // tabs UI
+  document.querySelectorAll(".tab").forEach(t => {
+    t.classList.toggle("active", t.dataset.tab === tab);
+  });
+
+  const area = el("adminArea");
+  const list = data.menu[tab];
+
+  area.innerHTML = `
+    <div class="section">
+      <h3 style="margin:0 0 6px;">Manage ${capitalize(tab)}</h3>
+      <div class="hint">Add new options, edit names, and change prices. Changes instantly update the builder.</div>
+    </div>
+
+    <div class="section">
+      <div class="grid2">
+        <div>
+          <label>New ${singular(tab)} name</label>
+          <input id="newName" placeholder="e.g., Smoked Gouda" />
+        </div>
+        <div>
+          <label>New ${singular(tab)} price</label>
+          <input id="newPrice" type="number" step="0.01" min="0" placeholder="e.g., 0.75" />
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <button id="addBtn" type="button">Add ${singular(tab)}</button>
+        <button class="secondary" id="clearSubmissionsBtn" type="button" title="Clears trending burgers">Clear Trending Data</button>
+      </div>
+    </div>
+
+    <div class="s
 </html>
