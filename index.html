@@ -448,5 +448,221 @@ function renderAdmin(tab){
       </div>
     </div>
 
-    <div class="s
+    <div class="section">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width:45%;">Name</th>
+            <th style="width:20%;">Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="adminRows"></tbody>
+      </table>
+    </div>
+  `;
+
+  // wire up add button
+  area.querySelector("#addBtn").onclick = () => {
+    const n = area.querySelector("#newName").value.trim();
+    const p = Number(area.querySelector("#newPrice").value);
+    if(!n) return alert("Please enter a name.");
+    if(!Number.isFinite(p) || p < 0) return alert("Please enter a valid price (>= 0).");
+
+    data.menu[tab].push({ id: uid(), name: n, price: p });
+    saveData();
+    renderAll();
+    renderAdmin(tab);
+  };
+
+  area.querySelector("#clearSubmissionsBtn").onclick = () => {
+    if(!confirm("Clear trending/submission data? (Menu items stay.)")) return;
+    data.submissions = [];
+    saveData();
+    renderTrending();
+  };
+
+  // rows
+  const rows = area.querySelector("#adminRows");
+  rows.innerHTML = "";
+  list.forEach(item => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><input data-field="name" data-id="${item.id}" value="${escapeAttr(item.name)}"/></td>
+      <td><input data-field="price" data-id="${item.id}" type="number" step="0.01" min="0" value="${Number(item.price).toFixed(2)}"/></td>
+      <td>
+        <div class="actions">
+          <button class="secondary" data-action="save" data-id="${item.id}" type="button">Save</button>
+          <button class="danger" data-action="del" data-id="${item.id}" type="button">Delete</button>
+        </div>
+      </td>
+    `;
+    rows.appendChild(tr);
+  });
+
+  // delegate actions
+  rows.onclick = (e) => {
+    const btn = e.target.closest("button");
+    if(!btn) return;
+    const action = btn.dataset.action;
+    const id = btn.dataset.id;
+
+    if(action === "del"){
+      if(!confirm("Delete this option?")) return;
+      // remove from menu list
+      data.menu[tab] = data.menu[tab].filter(x => x.id !== id);
+      // remove from selections if currently selected
+      if(tab === "buns" && state.selected.bunId === id){
+        state.selected.bunId = data.menu.buns[0]?.id ?? null;
+      }
+      if(tab === "patties" && state.selected.pattyId === id){
+        state.selected.pattyId = data.menu.patties[0]?.id ?? null;
+      }
+      if(tab === "toppings"){ state.selected.toppingIds.delete(id); }
+      if(tab === "sauces"){ state.selected.sauceIds.delete(id); }
+
+      // trending keys may include deleted IDs; we keep trending data as-is (historical),
+      // but you can clear trending data from the admin panel.
+      saveData();
+      renderAll();
+      renderAdmin(tab);
+    }
+
+    if(action === "save"){
+      const nameInput = rows.querySelector(`input[data-field="name"][data-id="${id}"]`);
+      const priceInput = rows.querySelector(`input[data-field="price"][data-id="${id}"]`);
+      const newName = nameInput.value.trim();
+      const newPrice = Number(priceInput.value);
+      if(!newName) return alert("Name cannot be empty.");
+      if(!Number.isFinite(newPrice) || newPrice < 0) return alert("Invalid price.");
+
+      const it = data.menu[tab].find(x => x.id === id);
+      if(!it) return;
+      it.name = newName;
+      it.price = newPrice;
+
+      saveData();
+      renderAll();
+      renderAdmin(tab);
+    }
+  };
+
+  // keyboard: saving on Enter inside inputs
+  rows.onkeydown = (e) => {
+    if(e.key !== "Enter") return;
+    const input = e.target.closest("input");
+    if(!input) return;
+    const id = input.dataset.id;
+    const saveBtn = rows.querySelector(`button[data-action="save"][data-id="${id}"]`);
+    if(saveBtn) saveBtn.click();
+  };
+}
+
+/* =========================
+   Export / Import
+   ========================= */
+function exportJSON(){
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:"application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "build-a-burger-data.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function importJSON(){
+  const inp = document.createElement("input");
+  inp.type = "file";
+  inp.accept = "application/json";
+  inp.onchange = () => {
+    const file = inp.files?.[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try{
+        const parsed = JSON.parse(String(reader.result || ""));
+        if(!parsed?.menu?.toppings) throw new Error("Missing menu data.");
+        data = parsed;
+        saveData();
+        // reset selections if ids missing
+        state.selected.bunId = data.menu.buns[0]?.id ?? null;
+        state.selected.pattyId = data.menu.patties[0]?.id ?? null;
+        state.selected.toppingIds = new Set();
+        state.selected.sauceIds = new Set();
+        renderAll();
+        renderAdmin(currentAdminTab);
+        alert("Imported successfully!");
+      }catch(err){
+        alert("Import failed: " + (err?.message || "Invalid file"));
+      }
+    };
+    reader.readAsText(file);
+  };
+  inp.click();
+}
+
+/* =========================
+   Helpers
+   ========================= */
+function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function singular(tab){
+  if(tab.endsWith("ies")) return tab.slice(0, -3) + "y"; // patties -> patty
+  if(tab.endsWith("s")) return tab.slice(0, -1);
+  return tab;
+}
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function escapeAttr(str){ return escapeHtml(str).replace(/"/g, "&quot;"); }
+
+/* =========================
+   Events
+   ========================= */
+document.addEventListener("click", (e) => {
+  const tab = e.target.closest(".tab");
+  if(tab){
+    renderAdmin(tab.dataset.tab);
+  }
+});
+
+el("currency").addEventListener("change", (e) => {
+  state.currency = e.target.value;
+  refreshTotal();
+  renderTrending();
+  // admin prices also display in builder only; admin list shows numbers anyway.
+});
+
+el("submitBtn").addEventListener("click", submitBurger);
+
+el("resetBtn").addEventListener("click", () => {
+  state.selected.bunId = data.menu.buns[0]?.id ?? null;
+  state.selected.pattyId = data.menu.patties[0]?.id ?? null;
+  state.selected.toppingIds = new Set();
+  state.selected.sauceIds = new Set();
+  el("submitMsg").textContent = "";
+  renderAll();
+});
+
+el("exportBtn").addEventListener("click", exportJSON);
+el("importBtn").addEventListener("click", importJSON);
+
+el("factoryResetBtn").addEventListener("click", () => {
+  if(!confirm("Factory reset EVERYTHING (menu + submissions)?")) return;
+  data = structuredClone(DEFAULT_DATA);
+  saveData();
+  state.selected.bunId = data.menu.buns[0]?.id ?? null;
+  state.selected.pattyId = data.menu.patties[0]?.id ?? null;
+  state.selected.toppingIds = new Set();
+  state.selected.sauceIds = new Set();
+  el("submitMsg").textContent = "";
+  renderAll();
+  renderAdmin("toppings");
+});
+
+/* =========================
+   Init
+   ========================= */
+renderAll();
+</script>
+</body>
 </html>
