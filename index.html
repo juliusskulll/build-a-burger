@@ -8,21 +8,18 @@
     :root { --bg:#0b1210; --card:#0f1b16; --muted:#9fb2aa; --text:#e9f4ef; --green:#36d46b; --green2:#1aa34a; --border:#1e3a2c; }
     *{ box-sizing:border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
     body{ margin:0; background:radial-gradient(1000px 600px at 20% -10%, rgba(54,212,107,.25), transparent 60%), var(--bg); color:var(--text); }
-    header{ padding:24px 16px 10px; max-width:1100px; margin:0 auto; }
+    header{ padding:24px 16px 10px; max-width:1180px; margin:0 auto; }
     h1{ margin:0 0 6px; letter-spacing:.5px; }
     .sub{ color:var(--muted); margin:0; }
-    .wrap{ max-width:1100px; margin:0 auto; padding:12px 16px 40px; display:grid; grid-template-columns: 1.25fr .9fr; gap:16px; }
+
+    .wrap{ max-width:1180px; margin:0 auto; padding:12px 16px 40px;
+      display:grid; grid-template-columns: 1.35fr .95fr; gap:16px; }
     @media (max-width: 980px){ .wrap{ grid-template-columns:1fr; } }
 
     .card{ background:linear-gradient(180deg, rgba(255,255,255,.03), transparent 55%), var(--card);
       border:1px solid var(--border); border-radius:16px; padding:14px; box-shadow:0 10px 30px rgba(0,0,0,.35); }
     .card h2{ margin:0 0 10px; font-size:18px; }
     .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    .pill{ border:1px solid var(--border); background:rgba(0,0,0,.15); color:var(--text); padding:10px 12px; border-radius:12px; cursor:pointer; user-select:none; }
-    .pill:hover{ border-color: rgba(54,212,107,.7); }
-    .pill.active{ border-color: var(--green); outline:2px solid rgba(54,212,107,.25); }
-    .mini{ font-size:12px; color:var(--muted); }
-    .section{ margin-top:12px; }
     .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
     @media (max-width: 520px){ .grid2{ grid-template-columns:1fr; } }
 
@@ -31,10 +28,16 @@
     button:hover{ filter:brightness(1.05); }
     button.secondary{ background:transparent; border:1px solid var(--border); color:var(--text); font-weight:600; }
     button.danger{ background:#ff4d4d; color:#120606; }
+    button.small{ padding:7px 10px; border-radius:10px; font-weight:700; }
+    button.small.secondary{ font-weight:700; }
+
     input, select{ width:100%; padding:10px 11px; border-radius:12px; border:1px solid var(--border); background:rgba(0,0,0,.2); color:var(--text); }
     label{ display:block; font-size:12px; color:var(--muted); margin:8px 0 6px; }
     hr{ border:none; border-top:1px solid rgba(255,255,255,.06); margin:12px 0; }
+    .mini{ font-size:12px; color:var(--muted); }
+    .hint{ color:var(--muted); font-size:12px; line-height:1.35; }
 
+    /* Trending */
     .trendItem{ border:1px solid var(--border); border-radius:14px; padding:10px; background:rgba(0,0,0,.12); }
     .trendTop{ display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
     .trendName{ font-weight:800; }
@@ -42,27 +45,81 @@
     .price{ color: #c9ffd9; font-weight:800; }
     .badge{ display:inline-block; padding:3px 8px; border-radius:999px; border:1px solid rgba(54,212,107,.45); color:#c9ffd9; font-size:12px; margin-left:6px; }
 
+    /* Choice cards with quantity */
+    .choiceGrid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    @media (max-width: 650px){ .choiceGrid{ grid-template-columns:1fr; } }
+    .choiceCard{
+      border:1px solid var(--border); border-radius:14px; padding:10px;
+      background:rgba(0,0,0,.12); display:flex; justify-content:space-between; gap:10px; align-items:center;
+    }
+    .choiceName{ font-weight:800; }
+    .choiceSub{ font-size:12px; color:var(--muted); margin-top:4px; }
+    .qty{
+      display:flex; align-items:center; gap:8px;
+      border:1px solid var(--border); border-radius:12px; padding:6px 8px;
+      background:rgba(0,0,0,.10);
+      min-width:140px; justify-content:space-between;
+    }
+    .qtyNum{ font-weight:900; min-width:18px; text-align:center; }
+    .qtyBtns{ display:flex; gap:6px; }
+
+    /* Burger preview */
+    .previewWrap{
+      display:grid; grid-template-columns: 1fr 1fr; gap:10px; align-items:stretch;
+    }
+    @media (max-width: 860px){ .previewWrap{ grid-template-columns:1fr; } }
+    .previewCard{
+      border:1px solid var(--border); border-radius:16px; padding:12px;
+      background:rgba(0,0,0,.10);
+    }
+    .burgerStage{
+      height:320px; border-radius:16px;
+      border:1px dashed rgba(54,212,107,.35);
+      background:radial-gradient(600px 220px at 50% 100%, rgba(54,212,107,.16), transparent 65%), rgba(0,0,0,.10);
+      display:flex; align-items:flex-end; justify-content:center; padding:12px;
+      overflow:hidden;
+    }
+    .stack{ width:min(320px, 100%); display:flex; flex-direction:column-reverse; gap:6px; align-items:stretch; }
+    .layer{
+      border:1px solid rgba(255,255,255,.10); border-radius:14px;
+      padding:8px 10px;
+      display:flex; justify-content:space-between; align-items:center;
+      background:rgba(255,255,255,.05);
+      backdrop-filter: blur(4px);
+      font-weight:800;
+    }
+    .layer .tag{ font-size:12px; color:var(--muted); font-weight:700; }
+    .layer.bun{ border-color: rgba(255,211,150,.18); }
+    .layer.patty{ border-color: rgba(180,120,90,.22); }
+    .layer.top{ border-color: rgba(255,211,150,.22); }
+    .layer.sauce{ border-color: rgba(200,255,220,.18); }
+    .layer.topping{ border-color: rgba(120,255,180,.18); }
+
+    .totalBox{ display:flex; justify-content:space-between; align-items:center; gap:10px;
+      padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:rgba(0,0,0,.12); margin-top:10px; }
+
+    /* Admin tabs */
     .adminTabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
     .tab{ padding:8px 10px; border-radius:12px; border:1px solid var(--border); background:rgba(0,0,0,.12); cursor:pointer; }
     .tab.active{ border-color: var(--green); outline:2px solid rgba(54,212,107,.22); }
+
     .table{ width:100%; border-collapse:separate; border-spacing:0 8px; }
     .table th{ text-align:left; font-size:12px; color:var(--muted); font-weight:700; padding:0 8px; }
     .table td{ padding:10px 8px; background:rgba(0,0,0,.14); border:1px solid var(--border); }
     .table tr td:first-child{ border-top-left-radius:12px; border-bottom-left-radius:12px; }
     .table tr td:last-child{ border-top-right-radius:12px; border-bottom-right-radius:12px; }
-    .actions{ display:flex; gap:8px; }
-    .hint{ color:var(--muted); font-size:12px; line-height:1.35; }
-    .totalBox{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:rgba(0,0,0,.12); margin-top:10px; }
+    .actions{ display:flex; gap:8px; flex-wrap:wrap; }
+    .cap{ text-transform:capitalize; }
   </style>
 </head>
 <body>
   <header>
     <h1>Build-A-Burger</h1>
-    <p class="sub">Customise your burger • Admin can add toppings + set prices • Trending burgers update automatically</p>
+    <p class="sub">Customise your burger • Quantities + limits • Trending burgers update automatically</p>
   </header>
 
   <div class="wrap">
-    <!-- LEFT: Trending + Builder -->
+    <!-- LEFT -->
     <div class="card">
       <h2>🔥 Top Trending Burgers</h2>
       <div id="trendingList" class="grid2"></div>
@@ -74,7 +131,7 @@
 
       <div class="section">
         <div class="row" style="justify-content:space-between;">
-          <div>
+          <div style="flex:1; min-width:240px;">
             <div class="mini">Burger name (optional)</div>
             <input id="burgerName" placeholder="e.g., Triple Cheese Beast" />
           </div>
@@ -90,47 +147,62 @@
         </div>
       </div>
 
+      <div class="previewWrap" style="margin-top:12px;">
+        <div class="previewCard">
+          <h3 style="margin:0 0 8px;">👀 Burger Preview</h3>
+          <div class="burgerStage">
+            <div class="stack" id="burgerStack"></div>
+          </div>
+          <div class="mini" id="limitHint" style="margin-top:10px;"></div>
+        </div>
+
+        <div class="previewCard">
+          <h3 style="margin:0 0 8px;">🧾 Current Selections</h3>
+          <div class="mini" id="selectionSummary"></div>
+          <div class="totalBox">
+            <div>
+              <div class="mini">Current total</div>
+              <div style="font-size:18px; font-weight:900;" id="totalPrice">€0.00</div>
+            </div>
+            <div class="row">
+              <button class="secondary" id="resetBtn" type="button">Reset</button>
+              <button id="submitBtn" type="button">Submit Burger</button>
+            </div>
+          </div>
+          <p class="mini" id="submitMsg" style="margin-top:10px;"></p>
+        </div>
+      </div>
+
+      <hr />
+
       <div class="section">
-        <h3 style="margin:8px 0 6px;">Bun</h3>
+        <h3 style="margin:8px 0 6px;">Bun (choose 1)</h3>
         <div class="row" id="bunChoices"></div>
       </div>
 
       <div class="section">
-        <h3 style="margin:8px 0 6px;">Patty</h3>
-        <div class="row" id="pattyChoices"></div>
+        <h3 style="margin:8px 0 6px;">Patties (quantity allowed)</h3>
+        <div class="choiceGrid" id="pattyChoices"></div>
+        <div class="hint" style="margin-top:6px;">You can add multiple patties (and even mix types) up to the admin limit.</div>
       </div>
 
       <div class="section">
-        <h3 style="margin:8px 0 6px;">Toppings</h3>
-        <div class="row" id="toppingChoices"></div>
-        <div class="hint" style="margin-top:6px;">Tip: Click to toggle. Add new toppings + prices in the Admin panel.</div>
+        <h3 style="margin:8px 0 6px;">Toppings (quantity allowed)</h3>
+        <div class="choiceGrid" id="toppingChoices"></div>
+        <div class="hint" style="margin-top:6px;">Admin can set max total toppings + max per topping (e.g., max 3 cheese).</div>
       </div>
 
       <div class="section">
-        <h3 style="margin:8px 0 6px;">Sauces</h3>
-        <div class="row" id="sauceChoices"></div>
+        <h3 style="margin:8px 0 6px;">Sauces (quantity allowed)</h3>
+        <div class="choiceGrid" id="sauceChoices"></div>
       </div>
-
-      <div class="totalBox">
-        <div>
-          <div class="mini">Current total</div>
-          <div style="font-size:18px; font-weight:900;" id="totalPrice">€0.00</div>
-        </div>
-        <div class="row">
-          <button class="secondary" id="resetBtn" type="button">Reset</button>
-          <button id="submitBtn" type="button">Submit Burger</button>
-        </div>
-      </div>
-
-      <p class="mini" id="submitMsg" style="margin-top:10px;"></p>
     </div>
 
-    <!-- RIGHT: Admin Panel -->
+    <!-- RIGHT: Admin -->
     <div class="card">
       <h2>🛠️ Admin Panel</h2>
       <p class="hint">
-        Add/edit choices and change prices. This is stored in your browser (LocalStorage).<br />
-        If you want a shared online version later, you’ll need a backend or a shared database.
+        Add/edit options, change prices, and set limits (max totals + max per item). Stored in your browser (LocalStorage).
       </p>
 
       <div class="adminTabs">
@@ -148,19 +220,29 @@
         <button class="secondary" id="importBtn" type="button">Import Data (JSON)</button>
         <button class="danger" id="factoryResetBtn" type="button">Factory Reset</button>
       </div>
-      <p class="mini">Export/import is handy if you want to move your menu + prices to another device.</p>
+      <p class="mini">Export/import is useful to move your menu, prices, and limits to another device.</p>
     </div>
   </div>
 
 <script>
 /* =========================
-   Build-A-Burger
-   Single-file demo (LocalStorage)
+   Build-A-Burger (V2)
+   - Quantities per item
+   - Admin limits (max total + max per item)
+   - Visual preview
    ========================= */
 
-const LS_KEY = "buildaburger_data_v1";
+const LS_KEY = "buildaburger_data_v2";
+
+function uid(){ return Math.random().toString(16).slice(2) + Date.now().toString(16); }
+const el = (id) => document.getElementById(id);
 
 const DEFAULT_DATA = {
+  limits: {
+    patties: { maxTotal: 3, maxPerItem: 3 },
+    toppings:{ maxTotal: 6, maxPerItem: 3 },
+    sauces:  { maxTotal: 4, maxPerItem: 3 }
+  },
   menu: {
     buns: [
       { id: uid(), name: "Sesame Bun", price: 0.80 },
@@ -190,39 +272,28 @@ const DEFAULT_DATA = {
       { id: uid(), name: "Spicy Sauce", price: 0.30 },
     ]
   },
-  submissions: [
-    // { key, count, lastPrice, displayName, createdAt }
-  ]
+  submissions: []
 };
 
 let data = loadData();
+
 let state = {
   currency: "€",
   selected: {
     bunId: data.menu.buns[0]?.id ?? null,
-    pattyId: data.menu.patties[0]?.id ?? null,
-    toppingIds: new Set(),
-    sauceIds: new Set(),
+    // quantities stored as { [id]: qty }
+    patties: {},
+    toppings: {},
+    sauces: {}
   }
 };
-
-const el = (id) => document.getElementById(id);
-const fmt = (n) => {
-  const c = state.currency;
-  // If AED selected, show "AED 12.34" format
-  if (c === "AED") return `AED ${Number(n).toFixed(2)}`;
-  return `${c}${Number(n).toFixed(2)}`;
-};
-
-function uid(){ return Math.random().toString(16).slice(2) + Date.now().toString(16); }
 
 function loadData(){
   try{
     const raw = localStorage.getItem(LS_KEY);
     if(!raw) return structuredClone(DEFAULT_DATA);
     const parsed = JSON.parse(raw);
-    // light validation / fallback
-    if(!parsed?.menu?.toppings) return structuredClone(DEFAULT_DATA);
+    if(!parsed?.menu?.toppings || !parsed?.limits) return structuredClone(DEFAULT_DATA);
     return parsed;
   }catch(e){
     return structuredClone(DEFAULT_DATA);
@@ -237,107 +308,304 @@ function getItemById(list, id){
   return list.find(x => x.id === id) || null;
 }
 
+function fmt(n){
+  const c = state.currency;
+  if (c === "AED") return `AED ${Number(n).toFixed(2)}`;
+  return `${c}${Number(n).toFixed(2)}`;
+}
+
+function sumQty(mapObj){
+  return Object.values(mapObj).reduce((a,b)=>a + (Number(b)||0), 0);
+}
+
+function clampQtyMap(mapObj, limits){
+  // Remove zeros and clamp to maxPerItem
+  for(const [id, q] of Object.entries(mapObj)){
+    let nq = Number(q) || 0;
+    if (nq <= 0) delete mapObj[id];
+    else mapObj[id] = Math.min(nq, limits.maxPerItem);
+  }
+  // Clamp total to maxTotal by reducing extras
+  let total = sumQty(mapObj);
+  if (total <= limits.maxTotal) return;
+
+  // reduce highest quantities first (simple)
+  const entries = Object.entries(mapObj).sort((a,b)=> (b[1]-a[1]));
+  for(const [id] of entries){
+    while(total > limits.maxTotal && mapObj[id] > 0){
+      mapObj[id] -= 1;
+      total -= 1;
+      if(mapObj[id] === 0){ delete mapObj[id]; break; }
+    }
+    if(total <= limits.maxTotal) break;
+  }
+}
+
+function setQty(category, id, delta){
+  const limits = data.limits[category];
+  const mapObj = state.selected[category];
+  const current = Number(mapObj[id] || 0);
+  const next = current + delta;
+
+  // First apply per-item clamp
+  const clamped = Math.max(0, Math.min(next, limits.maxPerItem));
+  if (clamped === 0) delete mapObj[id];
+  else mapObj[id] = clamped;
+
+  // Then clamp total
+  clampQtyMap(mapObj, limits);
+
+  refreshAllDynamic();
+}
+
 function computeTotal(){
   const bun = getItemById(data.menu.buns, state.selected.bunId);
-  const patty = getItemById(data.menu.patties, state.selected.pattyId);
-  let total = 0;
-  if (bun) total += bun.price;
-  if (patty) total += patty.price;
+  let total = bun ? bun.price : 0;
 
-  for (const tid of state.selected.toppingIds){
-    const t = getItemById(data.menu.toppings, tid);
-    if (t) total += t.price;
+  // patties
+  for(const [id, qty] of Object.entries(state.selected.patties)){
+    const it = getItemById(data.menu.patties, id);
+    if(it) total += it.price * Number(qty);
   }
-  for (const sid of state.selected.sauceIds){
-    const s = getItemById(data.menu.sauces, sid);
-    if (s) total += s.price;
+  // toppings
+  for(const [id, qty] of Object.entries(state.selected.toppings)){
+    const it = getItemById(data.menu.toppings, id);
+    if(it) total += it.price * Number(qty);
+  }
+  // sauces
+  for(const [id, qty] of Object.entries(state.selected.sauces)){
+    const it = getItemById(data.menu.sauces, id);
+    if(it) total += it.price * Number(qty);
   }
   return total;
 }
 
 function burgerSignature(){
-  // Used for trending: stable key representing the burger config
   const bun = state.selected.bunId || "";
-  const patty = state.selected.pattyId || "";
-  const toppings = [...state.selected.toppingIds].sort().join(",");
-  const sauces = [...state.selected.sauceIds].sort().join(",");
-  return `bun=${bun}|patty=${patty}|t=${toppings}|s=${sauces}`;
+  const patties = Object.entries(state.selected.patties).sort().map(([id,q])=>`${id}:${q}`).join(",");
+  const toppings = Object.entries(state.selected.toppings).sort().map(([id,q])=>`${id}:${q}`).join(",");
+  const sauces = Object.entries(state.selected.sauces).sort().map(([id,q])=>`${id}:${q}`).join(",");
+  return `bun=${bun}|p=${patties}|t=${toppings}|s=${sauces}`;
 }
 
 function burgerHumanName(customName){
   if (customName && customName.trim().length) return customName.trim();
 
   const bun = getItemById(data.menu.buns, state.selected.bunId)?.name ?? "Bun";
-  const patty = getItemById(data.menu.patties, state.selected.pattyId)?.name ?? "Patty";
+  const patties = mapToText(state.selected.patties, data.menu.patties);
+  const toppings = mapToText(state.selected.toppings, data.menu.toppings);
+  const sauces = mapToText(state.selected.sauces, data.menu.sauces);
 
-  const toppings = [...state.selected.toppingIds]
-    .map(id => getItemById(data.menu.toppings, id)?.name)
+  const pPart = patties.length ? patties.join(", ") : "No patties";
+  const tPart = toppings.length ? toppings.slice(0,4).join(", ") + (toppings.length>4 ? "…" : "") : "No toppings";
+  const sPart = sauces.length ? sauces.slice(0,3).join(", ") + (sauces.length>3 ? "…" : "") : "No sauces";
+  return `${pPart} on ${bun} • ${tPart} • Sauces: ${sPart}`;
+}
+
+function mapToText(mapObj, list){
+  return Object.entries(mapObj)
+    .map(([id, qty]) => {
+      const it = getItemById(list, id);
+      if(!it) return null;
+      const q = Number(qty);
+      return q > 1 ? `${it.name} x${q}` : it.name;
+    })
     .filter(Boolean);
+}
 
-  const sauces = [...state.selected.sauceIds]
-    .map(id => getItemById(data.menu.sauces, id)?.name)
-    .filter(Boolean);
-
-  const tPart = toppings.length ? ` + ${toppings.slice(0,4).join(", ")}${toppings.length>4 ? "…" : ""}` : "";
-  const sPart = sauces.length ? ` (Sauces: ${sauces.slice(0,3).join(", ")}${sauces.length>3 ? "…" : ""})` : "";
-  return `${patty} on ${bun}${tPart}${sPart}`;
+function shortKeyFromConfig(){
+  const bun = getItemById(data.menu.buns, state.selected.bunId)?.name ?? "Bun";
+  const patties = mapToText(state.selected.patties, data.menu.patties);
+  const toppings = mapToText(state.selected.toppings, data.menu.toppings);
+  const sauces = mapToText(state.selected.sauces, data.menu.sauces);
+  return `Bun: ${bun} | Patties: ${patties.length? patties.join(", ") : "None"} | Toppings: ${toppings.length? toppings.join(", ") : "None"} | Sauces: ${sauces.length? sauces.join(", ") : "None"}`;
 }
 
 /* =========================
-   UI Rendering
+   Rendering
    ========================= */
-function renderAll(){
-  // currency
-  el("currency").value = state.currency;
 
-  renderChoices("bunChoices", data.menu.buns, state.selected.bunId, (id) => { state.selected.bunId = id; refreshTotal(); renderTrending(); });
-  renderChoices("pattyChoices", data.menu.patties, state.selected.pattyId, (id) => { state.selected.pattyId = id; refreshTotal(); renderTrending(); });
-  renderMultiChoices("toppingChoices", data.menu.toppings, state.selected.toppingIds, () => { refreshTotal(); renderTrending(); });
-  renderMultiChoices("sauceChoices", data.menu.sauces, state.selected.sauceIds, () => { refreshTotal(); renderTrending(); });
-
-  refreshTotal();
-  renderTrending();
-  renderAdmin("toppings");
-}
-
-function renderChoices(containerId, list, activeId, onSelect){
-  const root = el(containerId);
+function renderBuns(){
+  const root = el("bunChoices");
   root.innerHTML = "";
-  list.forEach(item => {
+  data.menu.buns.forEach(item => {
     const div = document.createElement("div");
-    div.className = "pill" + (item.id === activeId ? " active" : "");
-    div.title = `Price: ${fmt(item.price)}`;
+    div.className = "tab" + (item.id === state.selected.bunId ? " active" : "");
+    div.style.userSelect = "none";
     div.innerHTML = `${escapeHtml(item.name)} <span class="mini">(${fmt(item.price)})</span>`;
     div.onclick = () => {
-      onSelect(item.id);
-      renderChoices(containerId, list, item.id, onSelect);
+      state.selected.bunId = item.id;
+      refreshAllDynamic();
+      renderBuns();
     };
     root.appendChild(div);
   });
 }
 
-function renderMultiChoices(containerId, list, set, onToggle){
+function renderQtyChoices(containerId, list, category){
   const root = el(containerId);
   root.innerHTML = "";
+
+  const limits = data.limits[category];
+  const total = sumQty(state.selected[category]);
+
   list.forEach(item => {
-    const div = document.createElement("div");
-    const isOn = set.has(item.id);
-    div.className = "pill" + (isOn ? " active" : "");
-    div.title = `Price: ${fmt(item.price)} (click to ${isOn ? "remove" : "add"})`;
-    div.innerHTML = `${escapeHtml(item.name)} <span class="mini">(${fmt(item.price)})</span>`;
-    div.onclick = () => {
-      if (set.has(item.id)) set.delete(item.id); else set.add(item.id);
-      onToggle();
-      renderMultiChoices(containerId, list, set, onToggle);
-    };
-    root.appendChild(div);
+    const qty = Number(state.selected[category][item.id] || 0);
+    const card = document.createElement("div");
+    card.className = "choiceCard";
+
+    const left = document.createElement("div");
+    left.style.flex = "1";
+    left.innerHTML = `
+      <div class="choiceName">${escapeHtml(item.name)}</div>
+      <div class="choiceSub">Price: <b>${fmt(item.price)}</b> • Selected: <b>${qty}</b></div>
+    `;
+
+    const right = document.createElement("div");
+    right.className = "qty";
+
+    const minusBtn = document.createElement("button");
+    minusBtn.className = "small secondary";
+    minusBtn.type = "button";
+    minusBtn.textContent = "−";
+    minusBtn.disabled = qty <= 0;
+    minusBtn.onclick = () => setQty(category, item.id, -1);
+
+    const plusBtn = document.createElement("button");
+    plusBtn.className = "small";
+    plusBtn.type = "button";
+    plusBtn.textContent = "+";
+
+    const wouldHitPerItem = qty >= limits.maxPerItem;
+    const wouldHitTotal = total >= limits.maxTotal && qty === 0; // adding new would exceed total
+    plusBtn.disabled = wouldHitPerItem || wouldHitTotal;
+    plusBtn.onclick = () => setQty(category, item.id, +1);
+
+    const qtyNum = document.createElement("div");
+    qtyNum.className = "qtyNum";
+    qtyNum.textContent = String(qty);
+
+    const btns = document.createElement("div");
+    btns.className = "qtyBtns";
+    btns.appendChild(minusBtn);
+    btns.appendChild(plusBtn);
+
+    right.appendChild(document.createElement("div")).textContent = "Qty";
+    right.appendChild(qtyNum);
+    right.appendChild(btns);
+
+    card.appendChild(left);
+    card.appendChild(right);
+    root.appendChild(card);
   });
+
+  // Hint line
+  const hintMap = {
+    patties: `Patties limit: max total ${limits.maxTotal}, max per patty ${limits.maxPerItem}.`,
+    toppings:`Toppings limit: max total ${limits.maxTotal}, max per topping ${limits.maxPerItem}.`,
+    sauces:  `Sauces limit: max total ${limits.maxTotal}, max per sauce ${limits.maxPerItem}.`,
+  };
+  el("limitHint").textContent =
+    `${hintMap.patties} ${hintMap.toppings} ${hintMap.sauces}`;
 }
 
-function refreshTotal(){
+function renderSummary(){
+  const bun = getItemById(data.menu.buns, state.selected.bunId);
+  const patties = mapToText(state.selected.patties, data.menu.patties);
+  const toppings = mapToText(state.selected.toppings, data.menu.toppings);
+  const sauces = mapToText(state.selected.sauces, data.menu.sauces);
+
+  el("selectionSummary").innerHTML = `
+    <div class="mini"><b>Bun:</b> ${escapeHtml(bun?.name || "None")}</div>
+    <div class="mini"><b>Patties:</b> ${escapeHtml(patties.length ? patties.join(", ") : "None")}</div>
+    <div class="mini"><b>Toppings:</b> ${escapeHtml(toppings.length ? toppings.join(", ") : "None")}</div>
+    <div class="mini"><b>Sauces:</b> ${escapeHtml(sauces.length ? sauces.join(", ") : "None")}</div>
+  `;
+}
+
+function renderBurgerPreview(){
+  const stack = el("burgerStack");
+  stack.innerHTML = "";
+
+  const layers = [];
+
+  // bottom bun
+  const bun = getItemById(data.menu.buns, state.selected.bunId);
+  layers.push({ type:"bun", label:`Bottom Bun`, tag: bun ? bun.name : "None" });
+
+  // sauces (put some near bottom)
+  addLayersFromMap(layers, state.selected.sauces, data.menu.sauces, "sauce", "Sauce");
+
+  // toppings
+  addLayersFromMap(layers, state.selected.toppings, data.menu.toppings, "topping", "Topping");
+
+  // patties (near top)
+  addLayersFromMap(layers, state.selected.patties, data.menu.patties, "patty", "Patty");
+
+  // top bun
+  layers.push({ type:"top", label:`Top Bun`, tag: bun ? bun.name : "None" });
+
+  // Visual limit (avoid insane stacks)
+  const MAX_LAYERS_VIS = 14;
+  let show = layers;
+  let hidden = 0;
+  if (layers.length > MAX_LAYERS_VIS){
+    hidden = layers.length - MAX_LAYERS_VIS;
+    show = layers.slice(0, MAX_LAYERS_VIS);
+  }
+
+  show.forEach(l => {
+    const div = document.createElement("div");
+    div.className = `layer ${l.type}`;
+    div.innerHTML = `<span>${escapeHtml(l.label)}</span><span class="tag">${escapeHtml(l.tag)}</span>`;
+    stack.appendChild(div);
+  });
+
+  if(hidden > 0){
+    const div = document.createElement("div");
+    div.className = "layer";
+    div.innerHTML = `<span>+ ${hidden} more layers</span><span class="tag">Preview condensed</span>`;
+    stack.appendChild(div);
+  }
+}
+
+function addLayersFromMap(arr, mapObj, list, cls, label){
+  // convert to array of repeated layers, stable order by name
+  const expanded = Object.entries(mapObj)
+    .map(([id, qty]) => {
+      const it = getItemById(list, id);
+      if(!it) return null;
+      return { name: it.name, qty: Number(qty)||0 };
+    })
+    .filter(Boolean)
+    .sort((a,b)=>a.name.localeCompare(b.name));
+
+  for(const item of expanded){
+    for(let i=0;i<item.qty;i++){
+      arr.push({ type: cls, label: label, tag: item.name });
+    }
+  }
+}
+
+function refreshAllDynamic(){
+  // ensure maps obey limits
+  clampQtyMap(state.selected.patties, data.limits.patties);
+  clampQtyMap(state.selected.toppings, data.limits.toppings);
+  clampQtyMap(state.selected.sauces, data.limits.sauces);
+
   el("totalPrice").textContent = fmt(computeTotal());
+  renderSummary();
+  renderBurgerPreview();
+  renderTrending();
+  // re-render qty cards so buttons disable correctly
+  renderQtyChoices("pattyChoices", data.menu.patties, "patties");
+  renderQtyChoices("toppingChoices", data.menu.toppings, "toppings");
+  renderQtyChoices("sauceChoices", data.menu.sauces, "sauces");
 }
 
+/* =========================
+   Trending
+   ========================= */
 function renderTrending(){
   const list = [...data.submissions]
     .sort((a,b) => b.count - a.count || b.createdAt - a.createdAt)
@@ -369,9 +637,6 @@ function renderTrending(){
   });
 }
 
-/* =========================
-   Submissions (Trending)
-   ========================= */
 function submitBurger(){
   const name = el("burgerName").value;
   const key = burgerSignature();
@@ -392,21 +657,13 @@ function submitBurger(){
   }
   found.count += 1;
   found.lastPrice = total;
-  // If user typed a custom name, keep the latest name (optional branding)
+  found.shortKey = shortKeyFromConfig();
   if (name && name.trim().length) found.displayName = name.trim();
 
   saveData();
   el("submitMsg").textContent = `✅ Submitted: "${displayName}" — Total: ${fmt(total)}`;
   el("burgerName").value = "";
   renderTrending();
-}
-
-function shortKeyFromConfig(){
-  const bun = getItemById(data.menu.buns, state.selected.bunId)?.name ?? "Bun";
-  const patty = getItemById(data.menu.patties, state.selected.pattyId)?.name ?? "Patty";
-  const t = [...state.selected.toppingIds].map(id => getItemById(data.menu.toppings, id)?.name).filter(Boolean);
-  const s = [...state.selected.sauceIds].map(id => getItemById(data.menu.sauces, id)?.name).filter(Boolean);
-  return `${patty} | ${bun} | Toppings: ${t.length ? t.join(", ") : "None"} | Sauces: ${s.length ? s.join(", ") : "None"}`;
 }
 
 /* =========================
@@ -417,7 +674,6 @@ let currentAdminTab = "toppings";
 function renderAdmin(tab){
   currentAdminTab = tab;
 
-  // tabs UI
   document.querySelectorAll(".tab").forEach(t => {
     t.classList.toggle("active", t.dataset.tab === tab);
   });
@@ -425,11 +681,35 @@ function renderAdmin(tab){
   const area = el("adminArea");
   const list = data.menu[tab];
 
+  // limits only apply to patties/toppings/sauces
+  const hasLimits = ["patties","toppings","sauces"].includes(tab);
+  const lim = hasLimits ? data.limits[tab] : null;
+
   area.innerHTML = `
     <div class="section">
-      <h3 style="margin:0 0 6px;">Manage ${capitalize(tab)}</h3>
-      <div class="hint">Add new options, edit names, and change prices. Changes instantly update the builder.</div>
+      <h3 style="margin:0 0 6px;">Manage <span class="cap">${tab}</span></h3>
+      <div class="hint">Edit names/prices. For ${hasLimits ? "this category you can also set limits." : "buns, customers can only choose 1."}</div>
     </div>
+
+    ${hasLimits ? `
+      <div class="section">
+        <h4 style="margin:8px 0 6px;">Limits</h4>
+        <div class="grid2">
+          <div>
+            <label>Max total ${tab}</label>
+            <input id="limMaxTotal" type="number" min="0" step="1" value="${Number(lim.maxTotal)}" />
+          </div>
+          <div>
+            <label>Max per single item</label>
+            <input id="limMaxPerItem" type="number" min="0" step="1" value="${Number(lim.maxPerItem)}" />
+          </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <button class="secondary" id="saveLimitsBtn" type="button">Save Limits</button>
+        </div>
+      </div>
+      <hr />
+    ` : ""}
 
     <div class="section">
       <div class="grid2">
@@ -462,7 +742,22 @@ function renderAdmin(tab){
     </div>
   `;
 
-  // wire up add button
+  if (hasLimits){
+    area.querySelector("#saveLimitsBtn").onclick = () => {
+      const maxTotal = Number(area.querySelector("#limMaxTotal").value);
+      const maxPerItem = Number(area.querySelector("#limMaxPerItem").value);
+
+      if(!Number.isFinite(maxTotal) || maxTotal < 0) return alert("Max total must be 0 or more.");
+      if(!Number.isFinite(maxPerItem) || maxPerItem < 0) return alert("Max per item must be 0 or more.");
+
+      data.limits[tab].maxTotal = Math.floor(maxTotal);
+      data.limits[tab].maxPerItem = Math.floor(maxPerItem);
+      saveData();
+      refreshAllDynamic();
+      renderAdmin(tab);
+    };
+  }
+
   area.querySelector("#addBtn").onclick = () => {
     const n = area.querySelector("#newName").value.trim();
     const p = Number(area.querySelector("#newPrice").value);
@@ -482,7 +777,6 @@ function renderAdmin(tab){
     renderTrending();
   };
 
-  // rows
   const rows = area.querySelector("#adminRows");
   rows.innerHTML = "";
   list.forEach(item => {
@@ -500,7 +794,6 @@ function renderAdmin(tab){
     rows.appendChild(tr);
   });
 
-  // delegate actions
   rows.onclick = (e) => {
     const btn = e.target.closest("button");
     if(!btn) return;
@@ -509,20 +802,17 @@ function renderAdmin(tab){
 
     if(action === "del"){
       if(!confirm("Delete this option?")) return;
-      // remove from menu list
+
       data.menu[tab] = data.menu[tab].filter(x => x.id !== id);
-      // remove from selections if currently selected
+
+      // Clean selections
       if(tab === "buns" && state.selected.bunId === id){
         state.selected.bunId = data.menu.buns[0]?.id ?? null;
       }
-      if(tab === "patties" && state.selected.pattyId === id){
-        state.selected.pattyId = data.menu.patties[0]?.id ?? null;
-      }
-      if(tab === "toppings"){ state.selected.toppingIds.delete(id); }
-      if(tab === "sauces"){ state.selected.sauceIds.delete(id); }
+      if(tab === "patties"){ delete state.selected.patties[id]; }
+      if(tab === "toppings"){ delete state.selected.toppings[id]; }
+      if(tab === "sauces"){ delete state.selected.sauces[id]; }
 
-      // trending keys may include deleted IDs; we keep trending data as-is (historical),
-      // but you can clear trending data from the admin panel.
       saveData();
       renderAll();
       renderAdmin(tab);
@@ -547,7 +837,6 @@ function renderAdmin(tab){
     }
   };
 
-  // keyboard: saving on Enter inside inputs
   rows.onkeydown = (e) => {
     if(e.key !== "Enter") return;
     const input = e.target.closest("input");
@@ -581,14 +870,14 @@ function importJSON(){
     reader.onload = () => {
       try{
         const parsed = JSON.parse(String(reader.result || ""));
-        if(!parsed?.menu?.toppings) throw new Error("Missing menu data.");
+        if(!parsed?.menu?.toppings || !parsed?.limits) throw new Error("Missing data.");
         data = parsed;
         saveData();
-        // reset selections if ids missing
+
         state.selected.bunId = data.menu.buns[0]?.id ?? null;
-        state.selected.pattyId = data.menu.patties[0]?.id ?? null;
-        state.selected.toppingIds = new Set();
-        state.selected.sauceIds = new Set();
+        state.selected.patties = {};
+        state.selected.toppings = {};
+        state.selected.sauces = {};
         renderAll();
         renderAdmin(currentAdminTab);
         alert("Imported successfully!");
@@ -604,7 +893,6 @@ function importJSON(){
 /* =========================
    Helpers
    ========================= */
-function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 function singular(tab){
   if(tab.endsWith("ies")) return tab.slice(0, -3) + "y"; // patties -> patty
   if(tab.endsWith("s")) return tab.slice(0, -1);
@@ -616,52 +904,54 @@ function escapeHtml(str){
 function escapeAttr(str){ return escapeHtml(str).replace(/"/g, "&quot;"); }
 
 /* =========================
-   Events
+   Init / Events
    ========================= */
+function renderAll(){
+  el("currency").value = state.currency;
+  renderBuns();
+  refreshAllDynamic();
+  renderAdmin(currentAdminTab);
+}
+
 document.addEventListener("click", (e) => {
   const tab = e.target.closest(".tab");
-  if(tab){
+  if(tab && tab.dataset.tab){
     renderAdmin(tab.dataset.tab);
   }
 });
 
 el("currency").addEventListener("change", (e) => {
   state.currency = e.target.value;
-  refreshTotal();
-  renderTrending();
-  // admin prices also display in builder only; admin list shows numbers anyway.
+  refreshAllDynamic();
 });
 
 el("submitBtn").addEventListener("click", submitBurger);
 
 el("resetBtn").addEventListener("click", () => {
   state.selected.bunId = data.menu.buns[0]?.id ?? null;
-  state.selected.pattyId = data.menu.patties[0]?.id ?? null;
-  state.selected.toppingIds = new Set();
-  state.selected.sauceIds = new Set();
+  state.selected.patties = {};
+  state.selected.toppings = {};
+  state.selected.sauces = {};
   el("submitMsg").textContent = "";
-  renderAll();
+  refreshAllDynamic();
+  renderBuns();
 });
 
 el("exportBtn").addEventListener("click", exportJSON);
 el("importBtn").addEventListener("click", importJSON);
 
 el("factoryResetBtn").addEventListener("click", () => {
-  if(!confirm("Factory reset EVERYTHING (menu + submissions)?")) return;
+  if(!confirm("Factory reset EVERYTHING (menu + submissions + limits)?")) return;
   data = structuredClone(DEFAULT_DATA);
   saveData();
   state.selected.bunId = data.menu.buns[0]?.id ?? null;
-  state.selected.pattyId = data.menu.patties[0]?.id ?? null;
-  state.selected.toppingIds = new Set();
-  state.selected.sauceIds = new Set();
+  state.selected.patties = {};
+  state.selected.toppings = {};
+  state.selected.sauces = {};
   el("submitMsg").textContent = "";
   renderAll();
-  renderAdmin("toppings");
 });
 
-/* =========================
-   Init
-   ========================= */
 renderAll();
 </script>
 </body>
